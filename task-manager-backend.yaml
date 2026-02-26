@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-manager-backend-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: task-manager-backend
+  template:
+    metadata:
+      labels:
+        app: task-manager-backend
+    spec:
+      containers:
+        - name: task-manager-backend
+          image: mohamed510/task-manager-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            # Database configuration
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: task-manager-postgres-config
+                  key: DB_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: task-manager-postgres-secret
+                  key: DB_USERNAME
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: task-manager-postgres-secret
+                  key: DB_PASSWORD
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: "org.postgresql.Driver"
+            # JPA Configuration
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+            - name: SPRING_JPA_SHOW_SQL
+              value: "false"
+            - name: SPRING_JPA_DATABASE_PLATFORM
+              value: "org.hibernate.dialect.PostgreSQLDialect"
+            # JWT configuration from secret
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: task-manager-backend-secret
+                  key: JWT_SECRET
+            - name: JWT_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: task-manager-backend-secret
+                  key: JWT_EXPIRATION
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-manager-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: task-manager-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
