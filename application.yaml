@@ -7,7 +7,7 @@ spec:
   project: default
   
   source:
-    repoURL: 
+    repoURL: https://github.com/cheikhi51/Task-Manager-K8s.git
     targetRevision: HEAD
     path: task-manager
   
