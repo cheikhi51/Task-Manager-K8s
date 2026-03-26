@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: mohamed510/task-manager-postgres:latest
+        image: postgres:18
         ports:
         - containerPort: 5432
         envFrom:
