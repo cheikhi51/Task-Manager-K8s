@@ -7,4 +7,4 @@ data:
   POSTGRES_PORT: "5432"
   POSTGRES_DB: task_manager
   DB_DRIVER_CLASS_NAME: org.postgresql.Driver
-  DB_URL: jdbc:postgresql://postgres:5432/task_manager
+  DB_URL: jdbc:postgresql://task-manager-postgres:5432/task_manager
