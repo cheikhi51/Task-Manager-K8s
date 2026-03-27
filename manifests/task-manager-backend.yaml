@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: task-manager-backend
-          image: mohamed510/task-manager-backend:latest
+          image: mohamed510/task-manager-backend:v2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
