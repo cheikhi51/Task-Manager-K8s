@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: task-manager-frontend
-          image: mohamed510/task-manager-frontend:latest
+          image: mohamed510/task-manager-frontend:IMAGE_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 80
