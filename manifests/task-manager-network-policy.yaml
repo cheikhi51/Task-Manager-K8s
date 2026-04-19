@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-policy
+  namespace: NAMESPACE
+spec:
+  podSelector:
+    matchLabels:
+      app: task-manager-backend
+
+  policyTypes:
+    - Ingress
+
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: task-manager-frontend
+      ports:
+        - protocol: TCP
+          port: 8080
